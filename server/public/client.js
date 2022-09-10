@@ -4,7 +4,7 @@ $(document).ready( () => {
     console.log('JQ');
     setClickListeners();
     getTaskList();
-})
+});
 
 //set up click listeners
 function setClickListeners() {
@@ -16,11 +16,11 @@ function setClickListeners() {
 
 function getTaskList() {
 //ajax request to server
-console.log( 'in getKoalas' );
+console.log( 'in getTaskList' );
   // ajax call to server to get koalas
   $.ajax({
     method: 'GET',
-    url: '/koalas'
+    url: '/tasks'
   })
   .then((response) => {
     console.log('success');
@@ -31,9 +31,21 @@ console.log( 'in getKoalas' );
   });
 }
 
-//renders tasks in field
-function renderTasks() {
-
+//renders tasks in display field
+function renderTasks(taskList) {
+    $('#taskListItems').empty();
+    for (let task of taskList) { //update this for proper formatting of rows/etc
+      $('#taskListItems').append(`
+        <section data-id="${task.id}" data-status="${task.status}">
+          <span>${task.task}</span>
+          <span>${task.taskLength}</span>
+          <span>${task.taskStatus}</span>
+          <span><button class="btn_delete">DELETE</button></span>
+          <span><button class="btn_status">Task Complete?</button></span>
+        </section>
+      `);
+    }
+    $('input').val('');
 }
 
 function inputTask() {

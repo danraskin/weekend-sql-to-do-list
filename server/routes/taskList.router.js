@@ -6,7 +6,8 @@ const pool = require('../modules/pool');
 
 //GET
 
-pool.get ('/', (req, res) => {
+taskListRouter.get ('/', (req, res) => {
+    console.log('in GET /tasks');
 
     //change order to "idrel" if i add detailed sub-task menu
     let queryText = 'SELECT * FROM "taskList" ORDER BY "id";'
@@ -22,7 +23,7 @@ pool.get ('/', (req, res) => {
 
 //POST
 
-pool.post ('/', (req, res) => {
+taskListRouter.post ('/', (req, res) => {
     let newTask = req.body;
 
     //set status ternary logic from koalaHolla project
@@ -45,7 +46,7 @@ pool.post ('/', (req, res) => {
 
 //PUT
 
-pool.put ('/:id', (req, res) => {
+taskListRouter.put ('/:id', (req, res) => {
     console.log(`Changing task status: id ${req.params.id}`);
     let updateId = req.params.id;
 
@@ -67,7 +68,7 @@ pool.put ('/:id', (req, res) => {
 
 //DELETE
 
-pool.delete ('/:id', (req, res) => {
+taskListRouter.delete ('/:id', (req, res) => {
     console.log(`Deleting task, id ${req.params.id}`);
     let deleteId = req.params.id;
   
