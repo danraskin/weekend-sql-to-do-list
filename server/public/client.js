@@ -12,6 +12,7 @@ function setClickListeners() { //click listeners
     $( '#btn_submitNewTask' ).on('click', saveTaskObject);
     $( '#taskListItems' ).on('click', '.btn_status', changeTaskStatus);
     $( '#taskListItems' ).on('click', '.btn_delete', deleteTask);
+    $( '#btn_newTask' ).on('click', inputDisplay);
 }
 
 function getTaskList() { // route GET: /tasks. calls renderTasks on successful response
@@ -30,19 +31,26 @@ function getTaskList() { // route GET: /tasks. calls renderTasks on successful r
 
 function renderTasks(taskList) { //renders tasks in display field. accepts req.body called by getTaskList().
     $('#taskListItems').empty();
+    let taskStatusView;
     for (let task of taskList) { //update this for proper formatting of rows/etc
-      $('#taskListItems').append(`
+        if (task.taskStatus === false) { //basic display setting. change this later.
+            taskStatusView = "⏳💀⏳💀⏳"
+        } else {
+            taskStatusView = "🌻🌷🌻🌷🌻"
+        }
+        $('#taskListItems').append(`
         <section data-id="${task.id}" data-status="${task.status}">
+          <span>${taskStatusView}</span>
           <span>${task.task}</span>
           <span>${task.taskLength}</span>
-          <span>${task.taskStatus}</span>
           <span><button class="btn_delete">DELETE</button></span>
-          <span><button class="btn_status">Task Complete?</button></span>
+          <span><button class="btn_status status-${task.taskStatus}">Task Complete?</button></span>
         </section>
       `);
     }
     $('input').val('');
 }
+
 
 function postTask(newTask) { //route POST: /tasks. inputs new task; calls getTaskList();
     $.ajax({
@@ -57,6 +65,7 @@ function postTask(newTask) { //route POST: /tasks. inputs new task; calls getTas
         .catch((error) => {
           console.log('error in POST /tasks',error)
         })
+    $('.input-field').css('display','none');
 }
 
 function saveTaskObject() { // if checkTaskInput() returns TRUE, creates new task object. calls postTask().
@@ -106,4 +115,12 @@ function deleteTask() { //route DELETE: /tasks/id. deletes task. calls getTaskLi
         .catch((error) => {
             console.log('error in DELETE /tasks',error);
         });
+}
+
+function inputDisplay() { //changes display setting on inputs
+    console.log($('.input-field').css('display') )
+    $('.input-field').css('display', 'block');
+    console.log($('.input-field').css('display') )
+
+
 }

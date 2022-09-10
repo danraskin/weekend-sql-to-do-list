@@ -10,7 +10,7 @@ taskListRouter.get ('/', (req, res) => {
     console.log('in GET /tasks');
 
     //change order to "idrel" if i add detailed sub-task menu
-    let queryText = 'SELECT * FROM "taskList" ORDER BY "id";'
+    let queryText = 'SELECT * FROM "taskList" ORDER BY "taskStatus", "id";'
     pool.query(queryText).then(result => {
         res.send(result.rows);
     })
@@ -29,7 +29,7 @@ taskListRouter.post ('/', (req, res) => {
     //set status ternary logic from koalaHolla project
     //let transfer = (req.body.ready_to_transfer === 'Y') ? true : false;
 
-    console.log('Adding new task: ', newTask);
+    console.log('in POST /tasks: ', newTask);
 
     let queryText = `INSERT INTO "taskList" ("task", "taskLength", "notes")
                    VALUES ($1, $2, $3);`;
