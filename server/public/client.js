@@ -8,9 +8,9 @@ $(document).ready( () => {
 
 //set up click listeners
 function setClickListeners() {
-
     //submit tasks
     $( '#btn_submitNewTask').on('click', saveTaskObject);
+    $( '#taskListItems').on('click', '.btn_status', changeTaskStatus);
 
 }
 
@@ -78,4 +78,19 @@ function saveTaskObject() {
 
 function checkTaskInput() {
     return true;
+}
+
+function changeTaskStatus() {
+    console.log('change status', $(this).closest('section').data('id'));
+    $.ajax({
+        method: 'PUT',
+        url: `/tasks/${$(this).closest('section').data('id')}`
+      })
+        .then((response) => {
+          console.log('PUT /tasks success',response);
+          getTaskList();
+        })
+        .catch((error) => {
+          console.log('error in PUT /tasks',error);
+        });
 }
