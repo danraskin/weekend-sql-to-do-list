@@ -10,7 +10,7 @@ $(document).ready( () => {
 function setClickListeners() {
 
     //submit tasks
-    $( '#btn_submitNewTask').on('click',inputTask);
+    $( '#btn_submitNewTask').on('click', saveTaskObject);
 
 }
 
@@ -48,10 +48,34 @@ function renderTasks(taskList) {
     $('input').val('');
 }
 
-function inputTask() {
-
+function postTask(newTask) {
+    $.ajax({
+        method: 'POST',
+        url: '/tasks',
+        data: newTask
+      })
+        .then((response) => {
+          console.log('POST /tasks successful', response);
+          getTaskList();
+        })
+        .catch((error) => {
+          console.log('error in POST /tasks',error)
+        })
 }
 
-function createTaskObject() {
+function saveTaskObject() {
+    if (!checkTaskInput()) {
+        return false;
+      } else {
+        let newTask = {
+          task: $('#inputTask').val(),
+          taskLength: $('#inputLength').val(),
+          notes: $('#inputNotes').val(),
+        }
+        postTask( newTask );
+      }
+}
 
+function checkTaskInput() {
+    return true;
 }
