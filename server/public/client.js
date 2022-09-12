@@ -15,11 +15,17 @@ function setTaskCounter() { //sets taskCounter variable on page-load.
         url: '/tasks/counterset'
     })
     .then((response) => {
-        console.log('GET /tasks/counterset success', response.rows[0].max);
         taskCounter = Number(response.rows[0].max);
+        //     console.log('expect TRUE');
+        //     taskCounter = 0;
+        // } else {
+        //     taskCounter = Number(response.rows[0].max);
+        // }
+        
     })
     .catch((error) => {
         console.log('error in GET /taskscounterset: ',error);
+        taskCounter = 0;
     });
 
 } 
@@ -61,7 +67,7 @@ function renderTasks(taskList) { //renders tasks in display field. accepts req.b
             taskStatusView = "🌻🌷🌻🌷🌻"
         }
         $('#taskListItems').append(`
-        <section data-id="${task.id}" data-idrel="${task.idrel}" data-idrelchild="${task.idrelchild}" data-status="${task.status}">
+        <section class="task-display" data-id="${task.id}" data-idrel="${task.idrel}" data-idrelchild="${task.idrelchild}" data-status="${task.status}">
           <span>IDREL: ${task.idrel}   </span>
           <span>${taskStatusView}</span>
           <span>${task.task}</span>
@@ -210,7 +216,7 @@ function renderTasksRoute2(taskList,clicktransfer) { //renders tasks in display 
             taskStatusView = "🌻🌷🌻🌷🌻"
         }
         $('#taskListItems').append(`
-        <section data-id="${task.id}" data-idrel="${task.idrel}" data-idrelchild="${task.idrelchild}" data-status="${task.status}">
+        <section class="task-display" data-id="${task.id}" data-idrel="${task.idrel}" data-idrelchild="${task.idrelchild}" data-status="${task.status}">
           <span>IDREL: ${task.idrel}   </span>
           <span>${taskStatusView}</span>
           <span>${task.task}</span>

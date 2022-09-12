@@ -51,3 +51,7 @@ header {
 .status-false{
     display: inline;
 }
+
+.task-display {
+    margin-left: 20%
+}
