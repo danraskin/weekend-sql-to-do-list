@@ -29,8 +29,18 @@ header {
 .input-field {
     display: none;
     position:absolute;
-
 }
+
+.input-field-hidden {
+    display: none;
+    position: absolute;
+}
+
+.input-field-display {
+    display: block;
+    position: absolute;
+}
+
 .btn_delete {
     align-self:right;
 }
