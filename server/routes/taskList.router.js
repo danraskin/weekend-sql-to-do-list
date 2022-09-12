@@ -40,10 +40,10 @@ taskListRouter.post ('/', (req, res) => {
 
     console.log('in POST /tasks: ', newTask);
 
-    let queryText = `INSERT INTO "taskList" ("idrel", "task", "taskLength", "notes")
-                   VALUES ($1, $2, $3, $4);`;
+    let queryText = `INSERT INTO "taskList" ("rank", "idrel", "task", "taskLength", "notes")
+                   VALUES ($1, $2, $3, $4, $5);`;
 
-    pool.query(queryText, [newTask.idrel, newTask.task, newTask.taskLength, newTask.notes])
+    pool.query(queryText, [newTask.rank, newTask.idrel, newTask.task, newTask.taskLength, newTask.notes])
         .then(result => {
             res.sendStatus(201);
         })

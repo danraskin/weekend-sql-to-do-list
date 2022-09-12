@@ -51,3 +51,13 @@ header {
 .status-false{
     display: inline;
 }
+
+.rank1 {
+    margin-left: auto;
+}
+.rank2 {
+    margin-left: 5%;
+}
+.rank3 {
+    margin-left: 10%;
+}
