@@ -1,5 +1,6 @@
 CREATE TABLE "taskList" (
 	"id" SERIAL PRIMARY KEY,
+	"rank" VARCHAR,
     "idrel" VARCHAR,
     "idrelchild" VARCHAR DEFAULT '0',
 	"task" VARCHAR(30) NOT NULL,
