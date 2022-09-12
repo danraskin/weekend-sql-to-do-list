@@ -62,7 +62,8 @@ taskListRouter.put ('/:id', (req, res) => {
     // Flip ready_to_transfer value to its opposite (true / false)
     const queryText = `
         UPDATE "taskList"
-            SET "taskStatus" = NOT "taskStatus"
+            SET "taskStatus" = NOT "taskStatus",
+                "rank" = 1
             WHERE "id" = $1;
     `
     pool.query(queryText, [updateId])

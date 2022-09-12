@@ -11,44 +11,44 @@ Additional README details can be found [here](https://github.com/PrimeAcademy/re
 This to-do-list app has the following primary functions:
 1. relays user input to a SQL database
 2. renders database status on page load and new submission
-3. allows users to mark tasks as complete. Task status is updated in databasa and reflected in DOM
+3. allows users to mark tasks as complete. Task status is updated in database and reflected in DOM
 4. allows user to remove task from database and DOM.
 
-these four functions demonstrate familiarity with the use of GET, POST, PUT and DELETE reqeusts.
+* These four functions demonstrate familiarity with the use of GET, POST, PUT and DELETE reqeusts.
 
-The unique feature of this to-do list is the ability to make a tree of nested tasks.
+* The unique feature of this to-do list is the ability to make a tree of nested tasks.
 
-If the main item on my list is "prepare dinner", the user can add tasks that comprise 'prepare dinner:
+    If the main item on my list is "prepare dinner", the user can add tasks that comprise 'prepare dinner:
 
-# "prepare dinner"
-  - "select menu"
-    - "make list of main course ideas"
-    - "make list of dessert ideas"
-  - "buy groceries"
-  - "clean kitchen"
-    - "run dishwasher"
-    - "clean cast irons"
-      - "they look pretty fucked, guess we should probably clean them with electrolysis"
-      - "re-season them"
-  - "cook meal"
-# "Do laundary"
+    # "prepare dinner"
+      - "select menu"
+        - "make list of main course ideas"
+        - "make list of dessert ideas"
+      - "buy groceries"
+      - "clean kitchen"
+        - "run dishwasher"
+        - "clean cast irons"
+          - "they look pretty fucked, guess we should probably clean them with electrolysis"
+          - "re-season them"
+      - "cook meal"
+    # "Do laundary"
 
   ETC.
 
-This is accomplished through two 'relative ID' values (idrel and idrelchild) associated with each task, where
-  - 'idrelchild' is the number of dependent, or 'child' tasks associated with a main task.
-  - 'idrel' is the 'path' of the object, used for sorting. it is a string concatenation of the parent task's 'idrel' and the current 'child count' of the parent object.
+* This is accomplished through two 'relative ID' values (idrel and idrelchild) associated with each task, where
+    - 'idrelchild' is the number of dependent, or 'child' tasks associated with a main task.
+    - 'idrel' is the 'path' of the object, used for sorting. it is a string concatenation of the parent task's 'idrel' and the current 'child count' of the parent object.
 
-  For example:
+    For example:
 
-  "prepare dinner" idrel is 1. "do laundary" idrel is 2.
-  "make list of main course ideas" idrel is 1.1; "dessert ideas is 1.2
+    "prepare dinner" idrel is 1. "do laundary" idrel is 2.
+    "make list of main course ideas" idrel is 1.1; "dessert ideas is 1.2
 
-Formatting is not complete--but the end goal is a display where task rank/dependency is obvious. indentation is the best solution.
+  Tasks are also given ranks. ranks are used to set indention by class in CSS.
 
-I chose this solution intuitively, and have not considered alternatives. However, the choice presented itself as an interesting challenge.
+* I chose this solution intuitively, and have not considered alternatives. However, the choice presented itself as an interesting challenge.
 
-How to set these two 'relative ID' values in relation to a dynamic task list? My solutions to this problem are as follows:
+* How to set these two 'relative ID' values in relation to a dynamic task list? My solutions to this problem are as follows:
 
 ## TWO INPUT BUTTONS:
 
