@@ -18,33 +18,33 @@ This to-do-list app has the following primary functions:
 
 * The unique feature of this to-do list is the ability to make a tree of nested tasks.
 
-    If the main item on my list is "prepare dinner", the user can add tasks that comprise 'prepare dinner:
-
-    # "prepare dinner"
-      - "select menu"
-        - "make list of main course ideas"
-        - "make list of dessert ideas"
-      - "buy groceries"
-      - "clean kitchen"
-        - "run dishwasher"
-        - "clean cast irons"
-          - "they look pretty fucked, guess we should probably clean them with electrolysis"
-          - "re-season them"
-      - "cook meal"
-    # "Do laundary"
-
-  ETC.
 
 * This is accomplished through two 'relative ID' values (idrel and idrelchild) associated with each task, where
     - 'idrelchild' is the number of dependent, or 'child' tasks associated with a main task.
-    - 'idrel' is the 'path' of the object, used for sorting. it is a string concatenation of the parent task's 'idrel' and the current 'child count' of the parent object.
+    - 'idrel' is a unique id, used for sorting. it is a string concatenation of the parent task's 'idrel' and the current 'child count' of the parent object.
+
+    - Tasks are also given ranks. ranks are used to set indention by class in CSS.
 
     For example:
 
-    "prepare dinner" idrel is 1. "do laundary" idrel is 2.
-    "make list of main course ideas" idrel is 1.1; "dessert ideas is 1.2
+    If the main item on my list is "prepare dinner", the user can add tasks that comprise 'prepare dinner:
 
-  Tasks are also given ranks. ranks are used to set indention by class in CSS.
+    # "prepare dinner" (idrel 1; rank 1)
+      - "select menu" (idrel 1.1; rank 2)
+        - "make list of main course ideas" (idrel 1.1.1; rank 3)
+        - "make list of dessert ideas" (idrel 1.1.2; rank 3)
+      - "buy groceries" (idrel 1.2; rank 2)
+      - "clean kitchen" (idrel 1.3; rank 2)
+        - "run dishwasher" idrel (1.3.1; rank 3)
+        - "clean cast irons" (idrel 1.3.2; rank 3)
+          - "they look pretty fucked, guess we should probably clean them with electrolysis" (idrel 1.3.2.1; rank 4)
+          - "re-season them" (idrel 1.3.2.2; rank 4)
+      - "cook meal" (idrel 1.4; rank 2)
+    # "Do laundary" (idrel 2; rank 1)
+
+  ETC.
+ 
+* front- end code to display 'task notes' as a pop-up side bar on mouse-hover has not been written.
 
 * I chose this solution intuitively, and have not considered alternatives. However, the choice presented itself as an interesting challenge.
 
