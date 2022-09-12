@@ -15,16 +15,10 @@ function setTaskCounter() { //sets taskCounter variable on page-load.
         url: '/tasks/counterset'
     })
     .then((response) => {
-        taskCounter = Number(response.rows[0].max);
-        //     console.log('expect TRUE');
-        //     taskCounter = 0;
-        // } else {
-        //     taskCounter = Number(response.rows[0].max);
-        // }
-        
+        taskCounter = Number(response.rows[0].max);        
     })
     .catch((error) => {
-        console.log('error in GET /taskscounterset: ',error);
+        console.log('expected error in GET/tasks/counterset .',error); //error is expected when no items in database
         taskCounter = 0;
     });
 
@@ -67,8 +61,7 @@ function renderTasks(taskList) { //renders tasks in display field. accepts req.b
             taskStatusView = "🌻🌷🌻🌷🌻"
         }
         $('#taskListItems').append(`
-        <section class="task-display" data-id="${task.id}" data-idrel="${task.idrel}" data-idrelchild="${task.idrelchild}" data-status="${task.status}">
-          <span>IDREL: ${task.idrel}   </span>
+        <section class="task-display rank${task.rank}" data-rank="${task.rank}" data-id="${task.id}" data-idrel="${task.idrel}" data-idrelchild="${task.idrelchild}" data-status="${task.status}">
           <span>${taskStatusView}</span>
           <span>${task.task}</span>
           <span>${task.taskLength}</span>
@@ -77,7 +70,7 @@ function renderTasks(taskList) { //renders tasks in display field. accepts req.b
           <span><button class="btn_newSubInput status-${task.taskStatus}" data-idrel="">➕</button></span>
         </section>
         <div class="dropdown">
-            <div class="input-field-hidden" data-id="${task.id}" data-idrel="${task.idrel}" data-idrelchild="${task.idrelchild}">
+            <div class="input-field-hidden rank${task.rank}" data-rank="${task.rank}" data-id="${task.id}" data-idrel="${task.idrel}" data-idrelchild="${task.idrelchild}">
                 <input class="inputSubTask" type="text" placeholder="New Task">
                 <input class="inputSubLength" type="text" placeholder="Task length">
                 <input class="inputSubNotes" type="text" placeholder="Task Notes?">
@@ -95,6 +88,7 @@ function saveTaskObject() { // if checkTaskInput() returns TRUE, creates new tas
         return false;
       } else {
         let newTask = {
+          rank: '1',
           idrel: taskCounter,
           task: $('#inputTask').val(),
           taskLength: $('#inputLength').val(),
@@ -174,7 +168,7 @@ function updateIdRel(){ //puts new idrelchild
 
     $.ajax({
         method: 'PUT',
-        url: `/tasks/idrelchild/${$(this).closest('div').data('id')}`,
+        url: `/tasks/idrelchild/${$(this).parent().data('id')}`,
         data: {
             idrelchild: newIdRelChild
         }
@@ -216,8 +210,7 @@ function renderTasksRoute2(taskList,clicktransfer) { //renders tasks in display 
             taskStatusView = "🌻🌷🌻🌷🌻"
         }
         $('#taskListItems').append(`
-        <section class="task-display" data-id="${task.id}" data-idrel="${task.idrel}" data-idrelchild="${task.idrelchild}" data-status="${task.status}">
-          <span>IDREL: ${task.idrel}   </span>
+        <section class="task-display rank${task.rank}" data-rank="${task.rank}" data-id="${task.id}" data-idrel="${task.idrel}" data-idrelchild="${task.idrelchild}" data-status="${task.status}">
           <span>${taskStatusView}</span>
           <span>${task.task}</span>
           <span>${task.taskLength}</span>
@@ -226,7 +219,7 @@ function renderTasksRoute2(taskList,clicktransfer) { //renders tasks in display 
           <span><button class="btn_newSubInput" data-idrel="">➕</button></span>
         </section>
         <div class="dropdown">
-            <div class="input-field-hidden" data-id="${task.id}" data-idrel="${task.idrel}" data-idrelchild="${task.idrelchild}">
+            <div class="input-field-hidden rank${task.rank}" data-rank="${task.rank}" data-id="${task.id}" data-idrel="${task.idrel}" data-idrelchild="${task.idrelchild}">
                 <input class="inputSubTask" type="text" placeholder="New Task">
                 <input class="inputSubLength" type="text" placeholder="Task length">
                 <input class="inputSubNotes" type="text" placeholder="Task Notes?">
@@ -245,12 +238,15 @@ function saveSubTaskObject(click) {
     if (!checkTaskInput(click)) {
         return false;
       } else {
+        let parentRank = $(click).parent().data('rank');
         let parentIdRel = $(click).parent().data('idrel');
         let parentIdRelChild = $(click).parent().data('idrelchild')
         let IdRel = parentIdRel + '.' + parentIdRelChild;
+        let rank = Number(parentRank) + 1;
         let newTask = {
             idrel: IdRel,
-            task: $(click).parent().children('.inputSubTask').val(), //will have to change these inputs if i introduce a new field
+            rank: rank,
+            task: $(click).parent().children('.inputSubTask').val(),
             taskLength: $(click).parent().children('.inputSubLength').val(),
             notes: $(click).parent().children('.inputSubNotes').val()
         }
