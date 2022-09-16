@@ -2,7 +2,7 @@ const pg = require('pg');
 const url = require('url');
 
 //HEROKU CONFIG
-let config {}
+let config = {}
 
 if (process.env.DATABASE_URL) {
   config = {
