@@ -1,4 +1,7 @@
 const pg = require('pg');
+
+const Pool = pg.Pool;
+
 const url = require('url');
 
 //HEROKU CONFIG
@@ -30,3 +33,4 @@ pool.on("error", (err) => {
 });
 
 module.exports = pool;
+
