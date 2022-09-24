@@ -1,6 +1,5 @@
 const pg = require('pg');
-
-const url = require('url');
+const url = require('url'); //am i missing something with this value?
 
 //HEROKU CONFIG
 let config = {}
@@ -15,8 +14,8 @@ if (process.env.DATABASE_URL) {
     database: 'weekend-to-do-app', 
     host: 'localhost', 
     port: 5432, 
-    // max: 10, 
-    // idleTimeoutMillis: 30000 
+    max: 10, 
+    idleTimeoutMillis: 30000 
   };
 }
 
