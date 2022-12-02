@@ -4,10 +4,14 @@ const url = require('url'); //am i missing something with this value?
 //HEROKU CONFIG
 let config = {}
 
-if (process.env.DATABASE_URL) {
+if (process.env.DB_PASS) {
   config = {
-    connectionString: process.env.DATABASE_URL,
-    ssl: { rejectUnauthorized: false },
+    user: 'danraskin',
+    host: 'db.bit.io',
+    database: 'danraskin/weekend-to-do-app',
+    password: process.env.DB_PASS, // key from bit.io database page connect menu
+    port: 5432,
+    ssl: true,
   };
 } else {
   config = {
@@ -18,7 +22,6 @@ if (process.env.DATABASE_URL) {
     idleTimeoutMillis: 30000 
   };
 }
-
 const pool = new pg.Pool(config);
 
 pool.on("connect", () => {
