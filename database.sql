@@ -1,6 +1,6 @@
-CREATE SCHEMA IF NOT EXISTS "tasklist"
+CREATE SCHEMA IF NOT EXISTS "tasklist";
 
-DROP TABLE IF EXISTS "tasklist"."taskList"
+DROP TABLE IF EXISTS "tasklist"."taskList";
 
 CREATE TABLE "tasklist"."taskList" (
 	"id" SERIAL PRIMARY KEY,
