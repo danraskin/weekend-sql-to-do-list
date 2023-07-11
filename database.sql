@@ -1,5 +1,8 @@
-CREATE SCHEMA IF EXISTS "tasklist"
-CREATE TABLE "taskList" (
+CREATE SCHEMA IF NOT EXISTS "tasklist"
+
+DROP TABLE IF EXISTS "tasklist"."taskList"
+
+CREATE TABLE "tasklist"."taskList" (
 	"id" SERIAL PRIMARY KEY,
 	"rank" VARCHAR,
     "idrel" VARCHAR,
