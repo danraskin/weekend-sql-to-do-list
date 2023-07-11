@@ -1,3 +1,4 @@
+CREATE SCHEMA IF EXISTS "tasklist"
 CREATE TABLE "taskList" (
 	"id" SERIAL PRIMARY KEY,
 	"rank" VARCHAR,

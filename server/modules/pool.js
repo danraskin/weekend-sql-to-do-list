@@ -1,17 +1,15 @@
 const pg = require('pg');
-const url = require('url'); //am i missing something with this value?
 
 //HEROKU CONFIG
 let config = {}
 
-if (process.env.DB_PASS) {
+if (process.env.DATABASE_URL) {
   config = {
-    user: 'danraskin',
-    host: 'db.bit.io',
-    database: 'danraskin/weekend-to-do-app',
-    password: process.env.DB_PASS, // key from bit.io database page connect menu
-    port: 5432,
-    ssl: true,
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+      rejectUnauthorized: false
+    },
+    schema: 'tasklist'
   };
 } else {
   config = {
@@ -24,8 +22,9 @@ if (process.env.DB_PASS) {
 }
 const pool = new pg.Pool(config);
 
-pool.on("connect", () => {
+pool.on('connect',(client)=> {
   console.log("connected to postgres");
+  client.query(`SET search_path TO ${config.schema}, public`);
 });
 
 pool.on("error", (err) => {
